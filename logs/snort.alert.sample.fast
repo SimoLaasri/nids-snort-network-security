@@ -1,0 +1,8 @@
+07/13-23:21:04.013422 [**] [1:1122:5] WEB-MISC /etc/passwd [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.50.130:51836 -> 192.168.50.20:80
+07/13-23:24:57.597283 [**] [1:1000002:1] Priority 1: SSH Brute Force Attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.50.130:40820 -> 192.168.50.20:22
+07/13-23:24:57.597383 [**] [1:1000002:1] Priority 1: SSH Brute Force Attempt [**] [Classification: Attempted Administrator Privilege Gain] [Priority: 1] {TCP} 192.168.50.130:40798 -> 192.168.50.20:22
+07/13-23:51:49.782933 [**] [1:1421:11] SNMP AgentX / tcp request [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.50.130:58156 -> 192.168.50.20:705
+07/13-23:51:49.786225 [**] [1:1418:11] SNMP request tcp [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.50.130:58156 -> 192.168.50.20:161
+07/13-23:54:45.104359 [**] [1:1000007:1] Priority 3: POLICY FTP anonymous login attempt [**] [Classification: Misc activity] [Priority: 3] {TCP} 192.168.50.130:48092 -> 192.168.50.20:21
+07/14-00:09:00.668287 [**] [1:1000005:1] Priority 2: SMB Share Enumeration Attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.50.130:56982 -> 192.168.50.20:445
+07/14-00:09:00.668378 [**] [1:1000005:1] Priority 2: SMB Share Enumeration Attempt [**] [Classification: Attempted Information Leak] [Priority: 2] {TCP} 192.168.50.130:56982 -> 192.168.50.20:445

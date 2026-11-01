@@ -1,0 +1,28 @@
+# $Id: local.rules, v1.11 2004/07/23 20:15:44 bmc Exp $
+# ----------------
+# LOCAL RULES
+# ----------------
+# This file intentionally does not come with signatures. Put your local
+# additions here.
+
+# [1] RECONNAISSANCE ET ENUMERATION
+# Detection de tentative d'enumeration des partages via le protocole SMB
+# (port 445)
+alert tcp any any -> $HOME_NET 445 (msg:"Priority 2: SMB Share Enumeration Attempt"; flow:to_server,established; classtype:attempted-recon; sid:1000005; rev:1;)
+
+# Detection de scan furtif Nmap (XMAS Scan - FIN, PSH, et URG flags set)
+alert tcp any any -> $HOME_NET any (msg:"Priority 2: Nmap XMAS Tree Scan Detected"; flags:FPU; classtype:attempted-recon; sid:1000006; rev:1;)
+
+# [2] ATTAQUES APPLICATIVES (WEB)
+# Detection d'exploitation de vulnerabilite Directory Traversal sur
+# serveur HTTP
+alert tcp any any -> $HTTP_SERVERS 80 (msg:"Priority 1: HTTP Directory Traversal Attempt (/etc/passwd)"; flow:to_server,established; content:"../"; content:"/etc/passwd"; classtype:web-application-attack; sid:1000003; rev:1;)
+
+# [3] ATTAQUES VOLUMETRIQUES (BRUTE FORCE)
+# Detection de Force Brute SSH via filtre temporel (5 requetes en 10
+# secondes par la meme IP)
+alert tcp any any -> $SSH_SERVERS 22 (msg:"Priority 1: SSH Brute Force Attempt"; flow:to_server,established; content:"SSH-"; depth:4; detection_filter:track by_src, count 5, seconds 10; classtype:attempted-admin; sid:1000002; rev:1;)
+
+# [4] PROTOCOLES NON SECURISES
+# Alerte de politique de securite : Detection de connexion FTP anonyme
+alert tcp any any -> $HOME_NET 21 (msg:"Priority 3: POLICY FTP anonymous login attempt"; flow:to_server,established; content:"USER anonymous"; nocase; classtype:misc-activity; sid:1000007; rev:1;)
