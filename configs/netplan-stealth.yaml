@@ -1,0 +1,12 @@
+# This is the network config written by 'subiquity'
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    ens33:
+      dhcp4: true
+    ens34:
+      dhcp4: false
+      dhcp6: false
+      accept-ra: false
+      optional: true

@@ -1,0 +1,17 @@
+# Network variables from the report's Annex B.
+ipvar HOME_NET 192.168.50.0/24
+ipvar EXTERNAL_NET !$HOME_NET
+
+ipvar DNS_SERVERS $HOME_NET
+ipvar SMTP_SERVERS $HOME_NET
+ipvar HTTP_SERVERS 192.168.50.20/32
+ipvar SQL_SERVERS $HOME_NET
+ipvar TELNET_SERVERS $HOME_NET
+ipvar SSH_SERVERS 192.168.50.20/32
+
+var RULE_PATH /etc/snort/rules
+var SO_RULE_PATH /etc/snort/so_rules
+var PREPROC_RULE_PATH /etc/snort/preproc_rules
+
+include $RULE_PATH/local.rules
+include $RULE_PATH/community.rules

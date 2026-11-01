@@ -1,0 +1,11 @@
+# Generated packet captures and local Snort runtime output
+*.pcap
+*.pcapng
+*.cap
+*.pid
+*.sock
+
+# Local editor and OS files
+.DS_Store
+.idea/
+.vscode/
