@@ -15,13 +15,15 @@ The protected network is `192.168.50.0/24`. The project combines custom Snort si
 
 ## Architecture
 
-The laboratory has three nodes:
+The laboratory has three nodes connected through VMware Workstation `VMnet2`, an isolated Host-Only network:
 
 - **Kali Linux attacker (`192.168.50.130`)**: runs Hydra, curl, Nmap NSE, and smbclient.
 - **Ubuntu Server victim (`192.168.50.20`)**: exposes Apache2, OpenSSH, vsftpd, and Samba services for controlled testing.
 - **Ubuntu Server + Snort sensor**: operates in parallel on VMware VMnet2. Its `ens34` capture interface is configured in stealth mode and placed in promiscuous mode; management is handled separately through `ens33`.
 
 The Host-Only network isolates the traffic from the physical LAN. Promiscuous mode on the sensor emulates a physical SPAN/port-mirroring deployment in VMware.
+
+See the detailed topology, interface roles, traffic path, and trust boundaries in [`docs/architecture.md`](docs/architecture.md).
 
 ## Attack Scenarios Simulated
 
@@ -42,7 +44,25 @@ The Host-Only network isolates the traffic from the physical LAN. Promiscuous mo
   - Kali: `192.168.50.130/24`
   - Protected network: `192.168.50.0/24`
 - Configure the sensor's `ens34` with [`configs/netplan-stealth.yaml`](configs/netplan-stealth.yaml), enable promiscuous mode, and load [`rules/local.rules`](rules/local.rules).
+- Configure Snort's network variables and rule includes using [`configs/snort.conf.network-vars`](configs/snort.conf.network-vars).
 - Run the documented test commands from [`scripts/attack_commands.sh`](scripts/attack_commands.sh) only inside the isolated lab.
+- Use [`scripts/sensor_setup.sh`](scripts/sensor_setup.sh) and [`scripts/victim_setup.sh`](scripts/victim_setup.sh) as deployment references.
+
+### Sensor startup
+
+```bash
+sudo netplan apply
+sudo ip link set dev ens34 promisc on
+sudo snort -A console -q -c /etc/snort/snort.conf -i ens34
+```
+
+### Alert review
+
+```bash
+sudo tail -f /var/log/snort/snort.alert.fast
+```
+
+The expected alert format is shown in [`logs/snort.alert.sample.fast`](logs/snort.alert.sample.fast).
 
 ## Disclaimer
 
