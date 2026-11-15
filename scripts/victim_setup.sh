@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# Reconstructed package-installation helper, not the original VM configuration.
+# Anonymous FTP, Samba shares, and lab accounts require separate configuration.
 # Install the services used as controlled attack surfaces.
 sudo apt update
 sudo apt install apache2 openssh-server vsftpd samba -y

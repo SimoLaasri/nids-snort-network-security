@@ -1,9 +1,5 @@
-# $Id: local.rules, v1.11 2004/07/23 20:15:44 bmc Exp $
-# ----------------
-# LOCAL RULES
-# ----------------
-# This file intentionally does not come with signatures. Put your local
-# additions here.
+# Snort 2 rule extracts from the PFA report, Annex C.
+# Whitespace normalized from the PDF; see docs/evidence-and-limitations.md.
 
 # [1] RECONNAISSANCE ET ENUMERATION
 # Detection de tentative d'enumeration des partages via le protocole SMB

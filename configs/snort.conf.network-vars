@@ -1,4 +1,5 @@
-# Network variables from the report's Annex B.
+# Network variables from the report's Annex B, not a complete snort.conf.
+# Merge the relevant variables into the distribution's full Snort 2 config.
 ipvar HOME_NET 192.168.50.0/24
 ipvar EXTERNAL_NET !$HOME_NET
 
@@ -13,5 +14,5 @@ var RULE_PATH /etc/snort/rules
 var SO_RULE_PATH /etc/snort/so_rules
 var PREPROC_RULE_PATH /etc/snort/preproc_rules
 
-include $RULE_PATH/local.rules
-include $RULE_PATH/community.rules
+# Ensure the full configuration includes $RULE_PATH/local.rules once.
+# Keep its packaged rule includes; a community.rules file may not be installed.
