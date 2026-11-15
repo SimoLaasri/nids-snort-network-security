@@ -1,0 +1,1 @@
+alert udp any any -> 198.51.100.20 5514 (msg:"LAB UDP marker detected"; content:"LAB-IDS-CHECK"; depth:13; sid:1000101; rev:1;)

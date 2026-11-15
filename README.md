@@ -4,7 +4,11 @@ A passive **Snort 2.9 NIDS** lab combining custom detection rules, controlled tr
 
 I carried out most of the hands-on lab work for this ISMAGI *Projet de Fin d’Année* (2025–2026). The submitted report is coauthored with **Salaheddine Haidarah**. My work covered setting up the virtual environment, configuring the sensor, testing detection scenarios, and interpreting network traffic and alerts.
 
-**Status:** academic lab documented in the [original French report](reports/rapport-nids-fr.pdf). The original VMs and working files are no longer available. This repository preserves report-based rule/configuration extracts and reconstructed helper scripts; it is not a freshly validated deployment.
+**Status:** The [French report](reports/rapport-nids-fr.pdf) documents the original multi-VM lab. The offline demo below can be reproduced independently. See [evidence and detection limits](docs/evidence-and-limitations.md) for the provenance of the original materials.
+
+## Try the offline demo
+
+[Replay two small PCAPs with Snort 2.9](demo/README.md). Both captures use the same UDP endpoints and payload length. One payload starts with a lab marker and triggers one alert. The benign payload produces no alerts. The walkthrough shows the rule, exact commands, and how to check the alert in Wireshark.
 
 ## What the lab does
 
@@ -52,7 +56,7 @@ The rules are retained as learning examples. See [evidence and detection limits]
 
 ![Report page showing tcpdump capturing ICMP traffic between lab hosts](assets/traffic-capture-report.png)
 
-Source: Figure 2.5, PDF page 23. This is historical report evidence, not a new test run.
+Source figure 2.5, PDF page 23.
 
 </details>
 
@@ -71,19 +75,8 @@ bash scripts/victim_setup.sh
 bash scripts/sensor_setup.sh
 ```
 
-Then follow the [lab guide](docs/lab-guide.md) to verify the capture path and start Snort. Run one selected traffic test at a time on Kali:
-
-```bash
-bash scripts/attack_commands.sh http
-bash scripts/attack_commands.sh xmas
-```
-
-The traffic scripts are intended for the isolated lab addresses shown here. Shell syntax and configuration structure have been checked; the full multi-VM lab has not been recreated.
+Then follow the [lab guide](docs/lab-guide.md) to verify the capture path and start Snort.
 
 ## What I learned
 
 This project helped me connect Linux networking, TCP/IP, rule syntax, and packet analysis. It also taught me to question what an alert actually proves: seeing a signature match is useful, but deciding whether an attack succeeded needs more evidence.
-
-## Résumé en français
-
-Ce PFA réalisé à l’ISMAGI porte sur un laboratoire de détection réseau avec Snort, Nmap et Wireshark. J’ai effectué l’essentiel du travail pratique ; le rapport est cosigné avec Salaheddine Haidarah. Le dépôt présente les règles, des extraits de configuration et les limites de la détection. Les scripts sont reconstitués à partir du rapport, car les fichiers et les VMs d’origine ne sont plus disponibles.

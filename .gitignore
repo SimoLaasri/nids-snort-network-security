@@ -1,5 +1,7 @@
 # Generated packet captures and local Snort runtime output
 *.pcap
+!/demo/match.pcap
+!/demo/benign.pcap
 *.pcapng
 *.cap
 *.pid

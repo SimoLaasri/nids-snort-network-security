@@ -1,0 +1,52 @@
+name: Offline PCAP replay
+
+on:
+  push:
+    paths:
+      - 'demo/**'
+      - '.github/workflows/pcap-replay.yml'
+  pull_request:
+    paths:
+      - 'demo/**'
+      - '.github/workflows/pcap-replay.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  replay:
+    runs-on: ubuntu-24.04
+    container: ubuntu:24.04
+    timeout-minutes: 10
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Install Snort and fixture tools
+        run: |
+          apt-get update -qq
+          DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends ca-certificates git python3 snort
+          snort -V
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          persist-credentials: false
+      - name: Verify committed captures are reproducible
+        run: |
+          python3 demo/generate_pcaps.py
+          git diff --exit-code -- demo/match.pcap demo/benign.pcap
+      - name: Assert one marker alert and zero control alerts
+        working-directory: demo
+        run: |
+          log_dir=$(mktemp -d)
+          marker='[1:1000101:1] LAB UDP marker detected'
+
+          matching=$(snort -q -A console -K none -l "$log_dir" -c snort.conf -r match.pcap)
+          printf '%s\n' "$matching"
+          test "$(grep -Fc "$marker" <<< "$matching")" -eq 1
+          grep -F "$marker" <<< "$matching" | grep -Fq '192.0.2.10:40000 -> 198.51.100.20:5514'
+
+          benign=$(snort -q -A console -K none -l "$log_dir" -c snort.conf -r benign.pcap)
+          printf '%s\n' "$benign"
+          test -z "$benign"
+          printf '%s\n' 'Benign capture: zero alerts'
