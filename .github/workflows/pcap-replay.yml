@@ -32,9 +32,11 @@ jobs:
         with:
           persist-credentials: false
       - name: Verify committed captures are reproducible
+        working-directory: demo
         run: |
-          python3 demo/generate_pcaps.py
-          git diff --exit-code -- demo/match.pcap demo/benign.pcap
+          original=$(sha256sum match.pcap benign.pcap)
+          python3 generate_pcaps.py
+          sha256sum --check <<< "$original"
       - name: Assert one marker alert and zero control alerts
         working-directory: demo
         run: |
