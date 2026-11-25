@@ -1,5 +1,7 @@
 # Network Intrusion Detection Lab
 
+[![Offline PCAP replay](https://github.com/SimoLaasri/nids-snort-network-security/actions/workflows/pcap-replay.yml/badge.svg)](https://github.com/SimoLaasri/nids-snort-network-security/actions/workflows/pcap-replay.yml)
+
 A passive **Snort 2.9 NIDS** lab combining custom detection rules, controlled traffic from Kali Linux, and packet analysis with Wireshark.
 
 I carried out most of the hands-on lab work for this ISMAGI *Projet de Fin d’Année* (2025–2026). The submitted report is coauthored with **Salaheddine Haidarah**. My work covered setting up the virtual environment, configuring the sensor, testing detection scenarios, and interpreting network traffic and alerts.
